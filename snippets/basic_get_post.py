@@ -2,13 +2,13 @@
 
 import urllib2
 import argparse
-import os
 import sys
 
 SERVER_URL = "https://wwwdev.ebi.ac.uk/pdbe/api"
-REQUEST_URL = SERVER_URL + "/pdb/entry/summary/%s?pretty=true"
 
-def make_request(url, data=None):
+SUMMARY = "/pdb/entry/summary/"
+
+def make_request(url, data):
     request = urllib2.Request(url)
 
     try:
@@ -23,6 +23,18 @@ def make_request(url, data=None):
 
     return url_file.read()
 
+def get_request(url, arg, pretty=True):
+    full_url = "%s/%s/%s?pretty=%s" % (SERVER_URL, url, arg, str(pretty).lower())
+
+    return make_request(full_url, None)
+
+def post_request(url, data, pretty=True):
+    full_url = "%s/%s/?pretty=%s" % (SERVER_URL, url, str(pretty).lower())
+
+    if isinstance(data, (list, tuple)):
+        data = ",".join(data)
+
+    return make_request(full_url, data)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
@@ -31,9 +43,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.e:
-        response = make_request(REQUEST_URL % args.e)
+        response = get_request(SUMMARY, args.e)
     elif args.p:
-        response = make_request(REQUEST_URL % "", args.p)
+        response = post_request(SUMMARY, args.p)
     else:
         parser.print_help()
         sys.exit(1)

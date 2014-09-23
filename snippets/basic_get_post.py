@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 
-import urllib2
 import argparse
 import sys
 
+PY3 = sys.version > '3'
+
+if PY3:
+    import urllib.request as urllib2
+else:
+    import urllib2
+
 SERVER_URL = "https://wwwdev.ebi.ac.uk/pdbe/api"
 
-SUMMARY = "/pdb/entry/summary/"
+SUMMARY = "/pdb/entry/summary"
 
 def make_request(url, data):
     request = urllib2.Request(url)
@@ -15,13 +21,13 @@ def make_request(url, data):
         url_file = urllib2.urlopen(request, data)
     except urllib2.HTTPError as e:
         if e.code == 404:
-            print "[NOTFOUND %d] %s" % (e.code, url)
+            print("[NOTFOUND %d] %s" % (e.code, url))
         else:
-            print "[ERROR %d] %s" % (e.code, url)
+            print("[ERROR %d] %s" % (e.code, url))
 
         return None
 
-    return url_file.read()
+    return url_file.read().decode()
 
 def get_request(url, arg, pretty=True):
     full_url = "%s/%s/%s?pretty=%s" % (SERVER_URL, url, arg, str(pretty).lower())
@@ -34,7 +40,7 @@ def post_request(url, data, pretty=True):
     if isinstance(data, (list, tuple)):
         data = ",".join(data)
 
-    return make_request(full_url, data)
+    return make_request(full_url, data.encode())
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
@@ -49,7 +55,7 @@ if __name__ == '__main__':
     else:
         parser.print_help()
         sys.exit(1)
-    
+
     if response:
-        print response
-        
+        print(response)
+

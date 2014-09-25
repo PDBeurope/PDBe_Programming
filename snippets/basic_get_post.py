@@ -29,12 +29,12 @@ def make_request(url, data):
 
     return url_file.read().decode()
 
-def get_request(url, arg, pretty=True):
+def get_request(url, arg, pretty=False):
     full_url = "%s/%s/%s?pretty=%s" % (SERVER_URL, url, arg, str(pretty).lower())
 
     return make_request(full_url, None)
 
-def post_request(url, data, pretty=True):
+def post_request(url, data, pretty=False):
     full_url = "%s/%s/?pretty=%s" % (SERVER_URL, url, str(pretty).lower())
 
     if isinstance(data, (list, tuple)):
@@ -49,9 +49,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.e:
-        response = get_request(SUMMARY, args.e)
+        response = get_request(SUMMARY, args.e, True)
     elif args.p:
-        response = post_request(SUMMARY, args.p)
+        response = post_request(SUMMARY, args.p, True)
     else:
         parser.print_help()
         sys.exit(1)

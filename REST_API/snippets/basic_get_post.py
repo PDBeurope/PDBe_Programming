@@ -10,7 +10,7 @@ if PY3:
 else:
     import urllib2
 
-SERVER_URL = "https://wwwdev.ebi.ac.uk/pdbe/api"
+SERVER_URL = "https://www.ebi.ac.uk/pdbe/api"
 
 SUMMARY = "/pdb/entry/summary"
 

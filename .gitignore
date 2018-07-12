@@ -1,0 +1,9 @@
+.ipynb_checkpoints/
+*.pyc
+*.svg
+*password.txt
+model_data/
+.vagrant/
+*.p
+!modeldata[D[D[D[D[D[C_[C[C[C[C[B[D[D[D[D[2~d[C[Da[2~ta/README.txt
+*.eps

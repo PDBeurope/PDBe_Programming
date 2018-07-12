@@ -1,0 +1,28 @@
+name: root
+channels:
+- rdkit
+- defaults
+dependencies:
+# - h5py
+# - keras
+# - mkl
+#- m2w64-toolchain
+- matplotlib
+- numpy
+- pandas
+- pillow
+- pydot
+- python=3.6.3
+- scikit-learn
+- scipy
+- seaborn
+  #- tensorflow
+  #- tensorflow-base
+  #- tensorflow-tensorboard
+  #- rdkit
+- jupyter
+- cython
+- pip
+- pip:
+  - mysolr
+  #- molvs
